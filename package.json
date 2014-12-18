@@ -1,0 +1,24 @@
+{
+  "name": "complex-list",
+  "version": "0.1.0",
+  "description": "List implementation that uses dedicated containers to hold objects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrija-hers/complex-list.git"
+  },
+  "keywords": [
+    "list",
+    "container",
+    "traversing"
+  ],
+  "author": "Andrija Petrovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrija-hers/complex-list/issues"
+  },
+  "homepage": "https://github.com/andrija-hers/complex-list"
+}
