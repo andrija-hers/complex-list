@@ -2,6 +2,10 @@ function ListItem(content){
   this.link = null;
   this.content = content;
 }
+ListItem.prototype.destroy = function(){
+  this.content = null;
+  this.link = null;
+};
 ListItem.prototype.linkTo = function(item){
   if(item){
     if(item.link){
@@ -18,10 +22,6 @@ ListItem.prototype.apply = function(func){
     return func(this.content,this);
   }
 };
-ListItem.prototype.destroy = function(){
-  this.content = null;
-  this.link = null;
-};
 
 function defaultSorter(){
   return false;
@@ -29,14 +29,23 @@ function defaultSorter(){
 function List(sortfunction){
   this.head = new ListItem();
   this.sorter = sortfunction || defaultSorter;
+  this.length = 0;
 }
 List.prototype.destroy = function(){
+  this.purge();
+  this.length = null;
+  this.sorter = null;
+  this.head = null;
+};
+List.prototype.purge = function(){
   var item = this.head, ditem;
   while(item){
     ditem = item;
     item = item.link;
     ditem.destroy();
   }
+  this.head.content = void 0;
+  this.length=0;
 };
 List.prototype.empty = function(){
   return !this.head.content;
@@ -44,6 +53,7 @@ List.prototype.empty = function(){
 List.prototype.add = function(content,afteritem){
   if(this.head.empty()){
     this.head.content = content;
+    this.length = 1;
     return;
   }
   var newitem = new ListItem(content);
@@ -54,6 +64,7 @@ List.prototype.add = function(content,afteritem){
   }else{
     newitem.linkTo(item);
   }
+  this.length++;
   return newitem;
 };
 List.prototype.removeOne = function(listitem){
@@ -71,6 +82,7 @@ List.prototype.removeOne = function(listitem){
         previtem.link = item.link;
         item.destroy();
       }
+      this.length--;
       return;
     }
     previtem = item;
@@ -133,6 +145,16 @@ List.prototype.traverseConditionally = function(func){
 };
 List.prototype.dumpToConsole = function(){
   this.traverse(console.log.bind(console));
+};
+function drainer(arry,countobj,content){
+  arry[countobj.count] = content;
+  countobj.count++;
+}
+List.prototype.drain = function(){
+  var ret = new Array(this.length),countobj={count:0};
+  this.traverse(drainer.bind(null,ret,countobj));
+  this.purge();
+  return ret;
 };
 
 module.exports = List;
