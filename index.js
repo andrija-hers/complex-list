@@ -20,6 +20,8 @@ ListItem.prototype.empty = function(){
 ListItem.prototype.apply = function(func){
   if('undefined' !== typeof this.content){
     return func(this.content,this);
+  }else{
+    return false;
   }
 };
 

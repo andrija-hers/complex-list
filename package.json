@@ -1,6 +1,6 @@
 {
   "name": "complex-list",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "List implementation that uses dedicated containers to hold objects",
   "main": "index.js",
   "scripts": {
