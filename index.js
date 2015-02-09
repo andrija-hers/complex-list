@@ -54,7 +54,7 @@ List.prototype.add = function(content,afteritem){
   if(this.head.empty()){
     this.head.content = content;
     this.length = 1;
-    return;
+    return this.head;
   }
   var newitem = new ListItem(content);
   var item = afteritem || this.lastItemToSatisfy(this.sorter.bind(null,content));
